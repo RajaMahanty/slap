@@ -1,6 +1,7 @@
 import {Inngest} from "inngest";
 import {connectDB} from "./db.js";
 import {User} from "../models/user.model.js";
+import {deleteStreamUser, upsertStreamUser} from "./stream.js";
 
 // Client to sent & receive events
 export const inngest = new Inngest({id: "slap-app"});
@@ -19,7 +20,11 @@ const syncUser = inngest.createFunction(
         };
         await User.create(newUser);
 
-        // NOT FULLY IMPLEMENTED
+        await upsertStreamUser({
+            id: newUser.clerkId,
+            name: newUser.name,
+            image: newUser.image,
+        })
     }
 )
 
@@ -31,7 +36,7 @@ const deleteUserFromDB = inngest.createFunction(
         const {id} = event.data;
         await User.deleteOne({clerkId: id});
 
-        // NOT FULLY IMPLEMENTED
+        await deleteStreamUser(id.toString());
     }
 )
 
