@@ -1,43 +1,47 @@
-import "../instrument.mjs"
-import express from "express"
-import {ENV} from "./config/env.js";
-import {connectDB} from "./config/db.js";
-import {clerkMiddleware} from "@clerk/express";
-import {serve} from "inngest/express";
-import {functions, inngest} from "./config/inngest.js";
+import { clerkMiddleware } from "@clerk/express";
+import cors from "cors";
+import express from "express";
+import { serve } from "inngest/express";
+import "../instrument.mjs";
+import { connectDB } from "./config/db.js";
+import { ENV } from "./config/env.js";
+import { functions, inngest } from "./config/inngest.js";
 import chatRoutes from "./routes/chat.route.js";
 
-import * as Sentry from '@sentry/node';
+import * as Sentry from "@sentry/node";
 
 const app = express();
 
 app.use(express.json());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(clerkMiddleware()); // req.auth will be in the request body
 
 app.get("/debug-sentry", (req, res) => {
-    throw new Error("Testing sentry error");
-})
+	throw new Error("Testing sentry error");
+});
 
 app.get("/", (req, res) => {
-    res.send("Hello World!")
-})
+	res.send("API is Working");
+});
 
-app.use("/api/inngest", serve({client: inngest, functions}))
+app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use("/api/chat", chatRoutes);
 
 Sentry.setupExpressErrorHandler(app);
 
 const startServer = async () => {
-    try {
-        await connectDB();
-        if(ENV.NODE_ENV !== "production") {
-            app.listen(ENV.PORT, () => console.log(`Server started on port: ${ENV.PORT}`));
-        }
-    } catch (e) {
-        console.log("Error starting the server")
-        process.exit(1);
-    }
-}
+	try {
+		await connectDB();
+		if (ENV.NODE_ENV !== "production") {
+			app.listen(ENV.PORT, () =>
+				console.log(`Server started on port: ${ENV.PORT}`)
+			);
+		}
+	} catch (e) {
+		console.log("Error starting the server");
+		process.exit(1);
+	}
+};
 
 startServer();
 
