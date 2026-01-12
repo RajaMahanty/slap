@@ -1,11 +1,11 @@
-import {clerkMiddleware} from "@clerk/express";
+import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 import express from "express";
-import {serve} from "inngest/express";
+import { serve } from "inngest/express";
 import "../instrument.mjs";
-import {connectDB} from "./config/db.js";
-import {ENV} from "./config/env.js";
-import {functions, inngest} from "./config/inngest.js";
+import { connectDB } from "./config/db.js";
+import { ENV } from "./config/env.js";
+import { functions, inngest } from "./config/inngest.js";
 import chatRoutes from "./routes/chat.route.js";
 
 import * as Sentry from "@sentry/node";
@@ -13,7 +13,12 @@ import * as Sentry from "@sentry/node";
 const app = express();
 
 app.use(express.json());
-app.use(cors({origin: ENV.CLIENT_URL, credentials: true}));
+app.use(
+	cors({
+		origin: ENV.CLIENT_URL?.replace(/\/$/, ""), // Ensure no trailing slash
+		credentials: true,
+	})
+);
 app.use(clerkMiddleware()); // req.auth will be in the request body
 
 app.get("/debug-sentry", (req, res) => {
