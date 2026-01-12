@@ -1,15 +1,9 @@
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router";
-import { useChatContext } from "stream-chat-react";
+import {useEffect, useState} from "react";
+import {useSearchParams} from "react-router";
+import {useChatContext} from "stream-chat-react";
 import * as Sentry from "@sentry/react";
-import { toast } from "react-hot-toast";
-import {
-	AlertCircleIcon,
-	HashIcon,
-	LockIcon,
-	UserIcon,
-	XIcon,
-} from "lucide-react";
+import {toast} from "react-hot-toast";
+import {AlertCircleIcon, HashIcon, LockIcon, UserIcon, XIcon,} from "lucide-react";
 
 const CreateChannelModal = ({ onClose }) => {
 	const [channelName, setChannelName] = useState("");
@@ -54,15 +48,6 @@ const CreateChannelModal = ({ onClose }) => {
 
 		fetchUsers();
 	}, [client]);
-
-	// reset the form on open
-	useEffect(() => {
-		setChannelName("");
-		setDescription("");
-		setChannelType("public");
-		setError("");
-		setSelectedMembers([]);
-	}, []);
 
 	// auto select all users for public channels
 	useEffect(() => {
