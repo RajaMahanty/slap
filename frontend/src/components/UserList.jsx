@@ -16,7 +16,8 @@ const UserList = ({activeChannel}) => {
             {name: 1},
             {limit: 20},
         );
-        return response.users
+
+        return response.users.filter((user) => !user.id.startsWith("recording-"));
     }, [client]);
 
     const {data: users = [], isLoading, isError} = useQuery({
