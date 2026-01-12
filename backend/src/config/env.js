@@ -11,4 +11,5 @@ export const ENV = {
     SENTRY_DSN: process.env.SENTRY_DSN || "Failed to get secret",
     INNGEST_EVENT_KEY: process.env.INNGEST_EVENT_KEY || "Failed to get secret",
     INNGEST_SIGNING_KEY: process.env.INNGEST_SIGNING_KEY || "Failed to get secret",
+    CLIENT_URL: process.env.CLIENT_URL || "Failed to get secret",
 }

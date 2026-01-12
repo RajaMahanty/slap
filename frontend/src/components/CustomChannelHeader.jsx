@@ -2,9 +2,9 @@ import React, {useState} from 'react'
 import {useChannelStateContext} from "stream-chat-react";
 import {useUser} from "@clerk/clerk-react";
 import {HashIcon, LockIcon, PinIcon, UserIcon, VideoIcon} from "lucide-react";
-import MembersModal from "./components/MembersModal.jsx";
-import PinnedMessagesModal from "./components/PinnedMessagesModal.jsx";
-import InviteModal from "./components/InviteModal.jsx";
+import MembersModal from "./MembersModal.jsx";
+import PinnedMessagesModal from "./PinnedMessagesModal.jsx";
+import InviteModal from "./InviteModal.jsx";
 
 const CustomChannelHeader = () => {
     const {channel} = useChannelStateContext();

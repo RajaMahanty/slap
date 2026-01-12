@@ -9,7 +9,7 @@ import {HashIcon, PlusIcon, UserIcon} from "lucide-react";
 import CreateChannelModal from "../components/CreateChannelModal";
 import CustomChannelPreview from "../components/CustomChannelPreview";
 import UserList from "../components/UserList.jsx";
-import CustomChannelHeader from "../CustomChannelHeader.jsx";
+import CustomChannelHeader from "../components/CustomChannelHeader.jsx";
 
 const HomePage = () => {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
