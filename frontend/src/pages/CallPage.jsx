@@ -27,17 +27,17 @@ const CallPage = () => {
     const [isConnecting, setIsConnecting] = useState(true);
 
     const {data: tokenData} = useQuery({
-        queryKey: STREAM_API_KEY,
+        queryKey: ["stream-token"],
         queryFn: getStreamToken,
         enabled: !!user,
     })
 
     useEffect(() => {
         const initCall = async () => {
-            if (!tokenData.token || !user || !call) return;
+            if (!tokenData?.token || !user || call) return;
 
             try {
-                const videoClient = await StreamVideoClient({
+                const videoClient = new StreamVideoClient({
                     apiKey: STREAM_API_KEY,
                     user: {
                         id: user.id,
